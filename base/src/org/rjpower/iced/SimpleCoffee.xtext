@@ -11,8 +11,8 @@ terminal KEYWORD:
   'if'| 'else'| 'switch'| 'for'| 'while'| 'do'| 'try'| 'catch'| 'finally'
   'class'| 'extends'| 'super'|
   'undefined'| 'then'| 'unless'| 'until'| 'loop'| 'of'| 'by'| 'when'|
-  'and'| 'or'| 'is'| 'isnt'| 'not'| 'yes'| 'no'| 'on'| 'off';
+  'and'| 'or'| 'is'| 'isnt'| 'not'| 'yes'| 'no'| 'on'| 'off' |
+  'defer' | 'await';
 
 terminal CLASSVAR:
-  '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+
-
+  '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;
