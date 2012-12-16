@@ -1,8 +1,11 @@
 grammar org.rjpower.iced.IcedCoffee with org.eclipse.xtext.common.Terminals
-
 generate icedCoffee "http://www.rjpower.org/IcedCoffee"
 
-Script: KEYWORD | CLASSVAR | ANY_OTHER+;
+// This is a trivial, incomplete grammar, but enough to give us some
+// basic indentation support and keyword/comment/string highlighting.
+
+Script: KEYWORD | CLASSVAR | STRING | SL_COMMENT | Block | ANY_OTHER+;
+Block: INDENT Script DEDENT;
 
 terminal KEYWORD:
   'true'| 'false'| 'null'| 'this'
@@ -14,5 +17,21 @@ terminal KEYWORD:
   'and'| 'or'| 'is'| 'isnt'| 'not'| 'yes'| 'no'| 'on'| 'off' |
   'defer' | 'await';
 
+terminal STRING:
+  '"' (ESCAPED_CHAR | !('\\' | '"'))* '"' |
+  "'" (ESCAPED_CHAR | !('\\' | "'"))* "'" |
+  "'''" !("'''")+ "'''" |
+  '"""' !('"""')+ '"""';
+
+terminal WS:
+  (' ' | '\t')+;
+
+terminal INDENT:
+  '{{{';
+
+terminal DEDENT:
+  '}}}';
+
+terminal SL_COMMENT: '#' (!'\n')*
 terminal CLASSVAR:
   '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;

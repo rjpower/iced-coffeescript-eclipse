@@ -4,15 +4,16 @@ import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.rjpower.iced.parser.antlr.internal.InternalIcedCoffeeLexer;
 
+// Horribly inefficient lexer hack to add indent/dedent tokens.  We
+// make a new copy of our input string, then split it into a bunch
+// of other strings.  But hey, it works!
 public class Lexer extends InternalIcedCoffeeLexer {
-  String[] lines;
-
   @Override
   public void setCharStream(CharStream input) {
     System.err.println("Using modified lexer.");
     String content = input.substring(0, input.size());
     StringBuilder out = new StringBuilder();
-    lines = content.split("\n");
+    String[] lines = content.split("\n");
     int lastIndent = 0;
 
     for (String l : lines) {
