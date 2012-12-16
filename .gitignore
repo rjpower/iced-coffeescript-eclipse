@@ -1,0 +1,4 @@
+*.class
+*/src-gen
+*/xtend-gen
+*/bin

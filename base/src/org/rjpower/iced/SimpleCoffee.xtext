@@ -1,0 +1,18 @@
+grammar org.rjpower.iced.IcedCoffee with org.eclipse.xtext.common.Terminals
+
+generate icedCoffee "http://www.rjpower.org/IcedCoffee"
+
+Script: KEYWORD | CLASSVAR | ANY_OTHER+;
+
+terminal KEYWORD:
+  'true'| 'false'| 'null'| 'this'
+  'new'| 'delete'| 'typeof'| 'in'| 'instanceof'
+  'return'| 'throw'| 'break'| 'continue'| 'debugger'
+  'if'| 'else'| 'switch'| 'for'| 'while'| 'do'| 'try'| 'catch'| 'finally'
+  'class'| 'extends'| 'super'|
+  'undefined'| 'then'| 'unless'| 'until'| 'loop'| 'of'| 'by'| 'when'|
+  'and'| 'or'| 'is'| 'isnt'| 'not'| 'yes'| 'no'| 'on'| 'off';
+
+terminal CLASSVAR:
+  '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+
+

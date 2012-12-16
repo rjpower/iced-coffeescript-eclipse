@@ -1,0 +1,149 @@
+grammar org.rjpower.iced.IcedCoffee with org.eclipse.xtext.xbase.Xbase
+
+generate icedCoffee "http://www.rjpower.org//Coffee"
+
+Script returns Script:
+  body+=(Body | Block);
+
+Body returns Body:
+  lines+=Line+;
+
+Block returns Block:
+  {Block}
+  INDENT body=Body? DEDENT;
+
+Line:
+  expr=Expr | ('return' return=Expr);
+
+Expr:
+  Assign |
+  Require |
+  Code |
+  (val=Value (call=Arguments next=Invocation?));
+
+Super returns Value:
+  'super';
+
+Invocation:
+  source=(Value | Super)
+  args=Arguments
+  next=Invocation?;
+
+Arguments:
+  {Arguments}
+  ('(' ')') |
+  ('(' ArgList ')');
+
+Code:
+  ('(' args+=Identifier (',' args+=Identifier)* ')')?
+  ('->' | '=>') body=Block;
+
+Identifier:
+  ValidID;
+
+Range returns RangeExpr:
+  '[' from=Expr '..' to=Expr ']';
+
+Slice:
+  {Slice}
+  (from=Expr '..' to=Expr) |
+  (from=Expr '..') |
+  ('..' to=Expr);
+
+IndexValue:
+  Expr | Slice;
+
+Index returns Index:
+  '[' val=IndexValue ']';
+
+Accessor:
+  (('.' | '?.' | '::') Identifier) | '::';
+
+Assign:
+  left=Assignable '='
+  (right=Expr |
+  (INDENT right=Expr DEDENT));
+
+Value:
+  literal=LITERAL |
+  expr=Assignable |
+  expr=Paren |
+  expr=Range;
+
+Assignable:
+  expr=SimpleAssignable |
+  array=Array |
+  obj=Object;
+
+SimpleAssignable:
+  Identifier;
+
+Arg:
+  Expr ('...')?;
+
+ArgList:
+  arg+=Arg (',' arg+=ArgList)? |
+  INDENT arg+=ArgList ','? DEDENT;
+
+ObjAssignable:
+  Identifier |
+  '@' Identifier;
+
+AssignObj:
+  {AssignObj}
+  obj=ObjAssignable |
+  obj=ObjAssignable ':' expr=Expr |
+  obj=ObjAssignable ':' INDENT expr=Expr DEDENT;
+
+AssignList:
+  elems+=AssignObj (',' elems+=AssignObj)*;
+
+Object:
+  {Expr}
+  '{' elems=AssignList ','? '}';
+
+Array:
+  {Expr}
+  ('[' ']') | '[' ArgList ']';
+
+Require:
+  {Require} 'require' package=Expr;
+
+Paren:
+  {Paren} '(' (vals+=Expr (',' vals+=Expr)*)? ')';
+
+terminal SL_COMMENT:
+  '#' !('\r' | '\n')* ('\r' | '\n');
+
+terminal fragment ESCAPED_CHAR:
+  '\\' ('n' | 't' | 'r' | '\\');
+
+terminal DIGITS:
+  ('0'..'9')+;
+
+terminal STRING:
+  '"' (ESCAPED_CHAR | !('\\' | '"'))* '"' |
+  "'" (ESCAPED_CHAR | !('\\' | "'"))* "'" |
+  "'''" !("'''")+ "'''" |
+  '"""' !('"""')+ '"""';
+
+terminal WS:
+  (' ' | '\t')+;
+
+terminal INDENT:
+  '{{{';
+
+terminal DEDENT:
+  '}}}';
+
+terminal LITERAL:
+  'null' |
+  'true' |
+  'false' |
+  'debugger' |
+  'undefined' |
+  'regex' |
+  'js' |
+  STRING |
+  DIGITS;
+  
