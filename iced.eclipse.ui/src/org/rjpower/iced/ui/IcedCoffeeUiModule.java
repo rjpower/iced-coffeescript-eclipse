@@ -39,11 +39,5 @@ public class IcedCoffeeUiModule extends
                 .named(org.eclipse.xtext.ui.LexerUIBindings.HIGHLIGHTING))
         .to(org.rjpower.iced.IcedCoffeeLexer.class);
   }
-  
-  @Override
-  public Class<? extends IContentFormatterFactory> bindIContentFormatterFactory() {
-    // TODO Auto-generated method stub
-    return super.bindIContentFormatterFactory();
-  }
 
 }

@@ -5,111 +5,119 @@ generate icedCoffee "http://www.rjpower.org/IcedCoffee"
 // This is a trivial, incomplete grammar, but enough to give us some
 // basic indentation support and keyword/comment/string highlighting.
 Script hidden(KW_REQUIRE, LPAREN, RPAREN, INDENT, DEDENT):
-	{Script}
-	(requires+=Require
-	| values+=Value
-	| comments+=COMMENT
-	| blocks+=Block
-	| WS
-	| ANY_OTHER)+;
+  {Script}
+  (requires+=Require
+  | values+=Value
+  | comments+=COMMENT
+  | blocks+=Block
+  | WS
+  | NL
+  | ANY_OTHER)+;
 
 Value:
-	(kw=KW_ALL
-	| fstart=(KW_FATARROW | KW_THINARROW)
-	| int=INT
-	| id=ID
-	| classvar=CLASSVAR
-	| string=STRING);
+  (kw=KW_ALL
+  | fstart=(KW_FATARROW | KW_THINARROW)
+  | int=INT
+  | id=ID
+  | classvar=CLASSVAR
+  | string=STRING);
 
 Block:
-	{Block}
-	INDENT content=Script DEDENT;
+  {Block}
+  INDENT content=Script DEDENT;
 
 Require:
-	KW_REQUIRE LPAREN? module=STRING RPAREN?;
+  KW_REQUIRE LPAREN? module=STRING RPAREN?;
 
 terminal KW_REQUIRE:
-	'require';
+  'require';
 
 terminal KW_FATARROW:
-	'=>';
+  '=>';
 
 terminal KW_THINARROW:
-	'->';
+  '->';
 
 terminal KW_ALL:
-	'and' |
-	'await' |
-	'break' |
-	'by' |
-	'catch' |
-	'class' |
-	'continue' |
-	'debugger' |
-	'defer' |
-	'delete' |
-	'do' |
-	'else' |
-	'extends' |
-	'false' |
-	'finally' |
-	'for' |
-	'if' |
-	'in' |
-	'instanceof' |
-	'is' |
-	'isnt' |
-	'loop' |
-	'new' |
-	'no' |
-	'not' |
-	'null' |
-	'of' |
-	'off' |
-	'on' |
-	'or' |
-	'return' |
-	'super' |
-	'switch' |
-	'then' |
-	'this' |
-	'throw' |
-	'true' |
-	'try' |
-	'typeof' |
-	'undefined' |
-	'unless' |
-	'until' |
-	'when' |
-	'while' |
-	'yes';
+  'and' |
+  'await' |
+  'break' |
+  'by' |
+  'catch' |
+  'class' |
+  'continue' |
+  'debugger' |
+  'defer' |
+  'delete' |
+  'do' |
+  'else' |
+  'extends' |
+  'false' |
+  'finally' |
+  'for' |
+  'if' |
+  'in' |
+  'instanceof' |
+  'is' |
+  'isnt' |
+  'loop' |
+  'new' |
+  'no' |
+  'not' |
+  'null' |
+  'of' |
+  'off' |
+  'on' |
+  'or' |
+  'return' |
+  'super' |
+  'switch' |
+  'then' |
+  'this' |
+  'throw' |
+  'true' |
+  'try' |
+  'typeof' |
+  'undefined' |
+  'unless' |
+  'until' |
+  'when' |
+  'while' |
+  'yes';
 
 terminal LPAREN:
-	'(';
+  '(';
 
 terminal RPAREN:
-	')';
+  ')';
 
 terminal CLASSVAR:
-	'@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;
+  '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;
 
-terminal STRING:
-	"'''" !("'''")+ "'''" |
-	'"""' !('"""')+ '"""' |
-	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
-	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
-
-terminal COMMENT:
-	'#' !('\n' | '\r')*;
-
+  // These are 'dummy' tokens.  The lexer will output these names instead of
+// actual tokens.  Why? So that we can have Antlr generate most of the lexer
+// for us and just override the whitespace recognition.
 terminal INDENT:
-	'««';
+  'INDENT';
 
 terminal DEDENT:
-	'»»';
+  'DEDENT';
+
+terminal NL:
+  ('\n' | '\r')+;
 
 terminal WS:
-	(' ' | '\n' | '\t' | '\r')+;
+  (' ' | '\t')+;
+
+terminal STRING:
+  "'''" !("'''")+ "'''" |
+  '"""' !('"""')+ '"""' |
+  '"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
+  "'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+
+terminal COMMENT:
+  '#' !('\n' | '\r')*;
 
 terminal ANY_OTHER:
-	.;
+  .;
+  

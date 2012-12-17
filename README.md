@@ -7,7 +7,7 @@ This project provides an editor for
 ## Installation
 
 * Help -> Install Software
-* Add update site: http://rjpower.org/iced-eclipse/
+* Add update site: http://rjpower.org/eclipse/
 * Install IcedCoffeeScript
 
 ## Features

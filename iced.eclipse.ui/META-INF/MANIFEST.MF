@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-Vendor: %Bundle-Vendor
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: iced.eclipse.ui; singleton:=true
+Bundle-SymbolicName: org.rjpower.iced.eclipse.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: iced.eclipse;visibility:=reexport,
  org.eclipse.xtext.ui,
@@ -21,8 +21,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.rjpower.iced.ui,
  org.rjpower.iced.ui.contentassist,
- org.rjpower.iced.ui.contentassist.antlr,
- org.rjpower.iced.ui.contentassist.antlr.internal;x-internal:=true,
  org.rjpower.iced.ui.internal;x-internal:=true,
  org.rjpower.iced.ui.labeling,
  org.rjpower.iced.ui.outline,
