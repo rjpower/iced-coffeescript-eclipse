@@ -31,7 +31,7 @@ a few "extras".
 
 ## Development
 
-* (Install Xtext)[http://www.eclipse.org/Xtext/download.html]
+* [Install Xtext](http://www.eclipse.org/Xtext/download.html)
 * Clone this repo
 * From Eclipse, File -> Import -> Existing Projects into Workspace
 * Start hacking!
