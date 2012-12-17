@@ -1,8 +1,8 @@
 # IcedEclipse
 
 This project provides an editor for 
-(iced-coffeescript)[http://coffeescript.org/], using the 
-(Xtext)[http://www.eclipse.org/Xtext/] toolkit.
+[\(iced\)](http://maxtaco.github.com/coffee-script/)[coffeescript](http://coffeescript.org/), using the 
+[Xtext](http://www.eclipse.org/Xtext/) toolkit.
 
 ## Installation
 
@@ -31,7 +31,7 @@ a few "extras".
 
 ## Development
 
-* (Install Xtext)[http://www.eclipse.org/Xtext/download.html]
+* [Install Xtext](http://www.eclipse.org/Xtext/download.html)
 * Clone this repo
 * From Eclipse, File -> Import -> Existing Projects into Workspace
 * Start hacking!
