@@ -1,8 +1,8 @@
 # IcedEclipse
 
 This project provides an editor for 
-(iced-coffeescript)[http://coffeescript.org/], using the 
-(Xtext)[http://www.eclipse.org/Xtext/] toolkit.
+[\(iced\)](http://maxtaco.github.com/coffee-script/)[coffeescript](http://coffeescript.org/), using the 
+[Xtext](http://www.eclipse.org/Xtext/) toolkit.
 
 ## Installation
 
