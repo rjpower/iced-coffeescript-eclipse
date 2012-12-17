@@ -1,0 +1,109 @@
+grammar org.rjpower.iced.IcedCoffee with org.eclipse.xtext.common.Terminals
+
+generate icedCoffee "http://www.rjpower.org/IcedCoffee"
+
+// This is a trivial, incomplete grammar, but enough to give us some
+// basic indentation support and keyword/comment/string highlighting.
+Script hidden(KW_REQUIRE, LPAREN, RPAREN, INDENT, DEDENT):
+	{Script}
+	(requires+=Require |
+	blocks+=Block |
+	values+=Value |
+	comments+=COMMENT |
+	(WS | ANY_OTHER))+;
+
+Value:
+	(kw=KW_ALL
+	int=INT |
+	id=ID |
+	classvar=CLASSVAR |
+	string=STRING);
+
+Require:
+	KW_REQUIRE LPAREN? STRING RPAREN?;
+
+Block:
+	INDENT content=Script DEDENT;
+
+terminal KW_REQUIRE:
+	'require';
+
+terminal LPAREN:
+	'(';
+
+terminal RPAREN:
+	')';
+
+terminal KW_ALL:
+	'and' |
+	'await' |
+	'break' |
+	'by' |
+	'catch' |
+	'class' |
+	'continue' |
+	'debugger' |
+	'defer' |
+	'delete' |
+	'do' |
+	'else' |
+	'extends' |
+	'false' |
+	'finally' |
+	'for' |
+	'if' |
+	'in' |
+	'instanceof' |
+	'is' |
+	'isnt' |
+	'loop' |
+	'new' |
+	'no' |
+	'not' |
+	'null' |
+	'of' |
+	'off' |
+	'on' |
+	'or' |
+	'return' |
+	'super' |
+	'switch' |
+	'then' |
+	'this' |
+	'throw' |
+	'true' |
+	'try' |
+	'typeof' |
+	'undefined' |
+	'unless' |
+	'until' |
+	'when' |
+	'while' |
+	'yes';
+
+terminal fragment ESCAPED_CHAR:
+	'\\' ('n' | 't' | 'r' | '\\');
+
+terminal STRING:
+	'"' (ESCAPED_CHAR | !('\\' | '"'))* '"' |
+	"'" (ESCAPED_CHAR | !('\\' | "'"))* "'" |
+	"'''" !("'''")+ "'''" |
+	'"""' !('"""')+ '"""';
+
+terminal INDENT:
+	'{{{';
+
+terminal DEDENT:
+	'}}}';
+
+terminal COMMENT:
+	'#' (!'\n')*;
+
+terminal CLASSVAR:
+	'@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;
+
+terminal WS:
+	(' ' | '\n' | '\t' | '\r')+;
+
+terminal ANY_OTHER:
+	!(' ' | '\n' | '\t' | '\r')+;
