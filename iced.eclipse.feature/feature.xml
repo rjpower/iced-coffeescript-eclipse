@@ -11,14 +11,14 @@
    <copyright>
       Copyright 2012 Russell Power
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
@@ -201,34 +201,25 @@ limitations under the License.
       of your accepting any such warranty or additional liability.
    </license>
 
+   <url>
+      <update url="http://rjpower.org/eclipse"/>
+   </url>
+
    <requires>
-      <import plugin="org.eclipse.xtext"/>
-      <import plugin="org.eclipse.xtext.util"/>
-      <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.emf.common"/>
-      <import plugin="org.antlr.runtime"/>
-      <import plugin="org.eclipse.xtext.common.types"/>
-      <import plugin="org.eclipse.xtext.xbase.lib"/>
-      <import plugin="org.apache.log4j"/>
-      <import plugin="iced.eclipse"/>
       <import plugin="org.eclipse.xtext.ui"/>
       <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.ui.shared"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.xtext.builder"/>
+      <import plugin="org.antlr.runtime"/>
       <import plugin="org.eclipse.xtext.common.types.ui"/>
       <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
       <import plugin="org.eclipse.compare"/>
       <import plugin="org.eclipse.xtext.xbase.ui"/>
+      <import plugin="org.apache.log4j"/>
+      <import plugin="org.rjpower.iced.eclipse" version="1.0.0" match="greaterOrEqual"/>
    </requires>
-
-   <plugin
-         id="org.rjpower.iced.eclipse"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.rjpower.iced.eclipse.ui"

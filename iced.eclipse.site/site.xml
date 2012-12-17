@@ -3,5 +3,5 @@
    <description name="Iced Coffeescript Editor" url="http://rjpower.org/eclipse/">
       
    </description>
-   <feature url="features/org.rjpower.iced.eclipse.feature_1.0.0.201212171200.jar" id="org.rjpower.iced.eclipse.feature" version="1.0.0.201212171200"/>
+   <feature url="features/org.rjpower.iced.eclipse.feature_1.0.0.201212171608.jar" id="org.rjpower.iced.eclipse.feature" version="1.0.0.201212171608"/>
 </site>

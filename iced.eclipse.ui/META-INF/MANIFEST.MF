@@ -5,8 +5,7 @@ Bundle-Vendor: %Bundle-Vendor
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.rjpower.iced.eclipse.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: iced.eclipse;visibility:=reexport,
- org.eclipse.xtext.ui,
+Require-Bundle: org.eclipse.xtext.ui,
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.xtext.ui.shared,
@@ -16,7 +15,8 @@ Require-Bundle: iced.eclipse;visibility:=reexport,
  org.eclipse.xtext.common.types.ui,
  org.eclipse.xtext.ui.codetemplates.ui,
  org.eclipse.compare,
- org.eclipse.xtext.xbase.ui
+ org.eclipse.xtext.xbase.ui,
+ org.rjpower.iced.eclipse;bundle-version="1.0.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.rjpower.iced.ui,
@@ -24,5 +24,6 @@ Export-Package: org.rjpower.iced.ui,
  org.rjpower.iced.ui.internal;x-internal:=true,
  org.rjpower.iced.ui.labeling,
  org.rjpower.iced.ui.outline,
- org.rjpower.iced.ui.quickfix
+ org.rjpower.iced.ui.quickfix,
+ org.rjpower.iced.ui.contentassist.antlr
 Bundle-Activator: org.rjpower.iced.ui.internal.IcedCoffeeActivator

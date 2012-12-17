@@ -4,19 +4,22 @@ generate icedCoffee "http://www.rjpower.org/IcedCoffee"
 
 // This is a trivial, incomplete grammar, but enough to give us some
 // basic indentation support and keyword/comment/string highlighting.
-Script hidden(KW_REQUIRE, LPAREN, RPAREN, INDENT, DEDENT):
+Script hidden(KW_REQUIRE, LPAREN, RPAREN, INDENT, DEDENT, WS, NL, ANY_OTHER):
   {Script}
   (requires+=Require
   | values+=Value
   | comments+=COMMENT
   | blocks+=Block
-  | WS
-  | NL
-  | ANY_OTHER)+;
+  | ws+=WS
+  | nl+=NL
+  | other+=ANY_OTHER)+;
 
 Value:
-  (kw=KW_ALL
+  {Value}
+  (kw=(KW_ALL | KW_EXPORTS)
   | fstart=(KW_FATARROW | KW_THINARROW)
+  | eq=EQUALS
+  | colon=COLON
   | int=INT
   | id=ID
   | classvar=CLASSVAR
@@ -28,6 +31,9 @@ Block:
 
 Require:
   KW_REQUIRE LPAREN? module=STRING RPAREN?;
+
+terminal KW_EXPORTS:
+  'exports';
 
 terminal KW_REQUIRE:
   'require';
@@ -90,6 +96,12 @@ terminal LPAREN:
 
 terminal RPAREN:
   ')';
+
+terminal COLON:
+  ':';
+
+terminal EQUALS:
+  '=';
 
 terminal CLASSVAR:
   '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;

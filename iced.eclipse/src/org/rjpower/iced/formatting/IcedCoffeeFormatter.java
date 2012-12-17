@@ -13,7 +13,12 @@ public class IcedCoffeeFormatter extends AbstractDeclarativeFormatter {
   protected void configureFormatting(FormattingConfig c) {
     IcedCoffeeGrammarAccess g = (IcedCoffeeGrammarAccess) getGrammarAccess();
     c.setLinewrap(0, 1, 2).before(g.getCOMMENTRule());
-    c.setIndentationIncrement().after(g.getKW_FATARROWRule());
-    c.setIndentationIncrement().after(g.getKW_THINARROWRule());
+    c.setNoSpace().around(g.getWSRule());
+    c.setNoSpace().around(g.getNLRule());
+    c.setNoSpace().around(g.getINDENTRule());
+    c.setNoSpace().around(g.getDEDENTRule());
+    c.setNoLinewrap().around(g.getNLRule());
+    c.setIndentationDecrement().after(g.getDEDENTRule());
+    c.setIndentationIncrement().after(g.getINDENTRule());
   }
 }
