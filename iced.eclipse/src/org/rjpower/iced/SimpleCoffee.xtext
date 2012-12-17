@@ -6,33 +6,36 @@ generate icedCoffee "http://www.rjpower.org/IcedCoffee"
 // basic indentation support and keyword/comment/string highlighting.
 Script hidden(KW_REQUIRE, LPAREN, RPAREN, INDENT, DEDENT):
 	{Script}
-	(requires+=Require |
-	blocks+=Block |
-	values+=Value |
-	comments+=COMMENT |
-	(WS | ANY_OTHER))+;
+	(requires+=Require
+	| values+=Value
+	| comments+=COMMENT
+	| blocks+=Block
+	| WS
+	| ANY_OTHER)+;
 
 Value:
 	(kw=KW_ALL
-	int=INT |
-	id=ID |
-	classvar=CLASSVAR |
-	string=STRING);
-
-Require:
-	KW_REQUIRE LPAREN? STRING RPAREN?;
+	| fstart=(KW_FATARROW | KW_THINARROW)
+	| int=INT
+	| id=ID
+	| classvar=CLASSVAR
+	| string=STRING);
 
 Block:
+	{Block}
 	INDENT content=Script DEDENT;
+
+Require:
+	KW_REQUIRE LPAREN? module=STRING RPAREN?;
 
 terminal KW_REQUIRE:
 	'require';
 
-terminal LPAREN:
-	'(';
+terminal KW_FATARROW:
+	'=>';
 
-terminal RPAREN:
-	')';
+terminal KW_THINARROW:
+	'->';
 
 terminal KW_ALL:
 	'and' |
@@ -81,29 +84,32 @@ terminal KW_ALL:
 	'while' |
 	'yes';
 
-terminal fragment ESCAPED_CHAR:
-	'\\' ('n' | 't' | 'r' | '\\');
+terminal LPAREN:
+	'(';
 
-terminal STRING:
-	'"' (ESCAPED_CHAR | !('\\' | '"'))* '"' |
-	"'" (ESCAPED_CHAR | !('\\' | "'"))* "'" |
-	"'''" !("'''")+ "'''" |
-	'"""' !('"""')+ '"""';
-
-terminal INDENT:
-	'{{{';
-
-terminal DEDENT:
-	'}}}';
-
-terminal COMMENT:
-	'#' (!'\n')*;
+terminal RPAREN:
+	')';
 
 terminal CLASSVAR:
 	'@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;
+
+terminal STRING:
+	"'''" !("'''")+ "'''" |
+	'"""' !('"""')+ '"""' |
+	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
+	"'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
+
+terminal COMMENT:
+	'#' !('\n' | '\r')*;
+
+terminal INDENT:
+	'««';
+
+terminal DEDENT:
+	'»»';
 
 terminal WS:
 	(' ' | '\n' | '\t' | '\r')+;
 
 terminal ANY_OTHER:
-	!(' ' | '\n' | '\t' | '\r')+;
+	.;

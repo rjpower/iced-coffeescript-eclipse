@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: iced.eclipse
-Bundle-Vendor: My Company
+Bundle-Name: %Bundle-Name
+Bundle-Vendor: %Bundle-Vendor
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: iced.eclipse; singleton:=true
 Bundle-ActivationPolicy: lazy

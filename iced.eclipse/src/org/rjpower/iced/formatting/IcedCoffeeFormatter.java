@@ -7,20 +7,13 @@ import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.rjpower.iced.services.IcedCoffeeGrammarAccess;
 
-/**
- * This class contains custom formatting description.
- * 
- * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#formatting
- * on how and when to use it
- * 
- * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an
- * example
- */
 public class IcedCoffeeFormatter extends AbstractDeclarativeFormatter {
 
   @Override
   protected void configureFormatting(FormattingConfig c) {
     IcedCoffeeGrammarAccess g = (IcedCoffeeGrammarAccess) getGrammarAccess();
     c.setLinewrap(0, 1, 2).before(g.getCOMMENTRule());
+    c.setIndentationIncrement().after(g.getKW_FATARROWRule());
+    c.setIndentationIncrement().after(g.getKW_THINARROWRule());
   }
 }
