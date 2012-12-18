@@ -1,7 +1,11 @@
 package org.rjpower.iced.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.ui.editor.formatting.IContentFormatterFactory;
+import org.eclipse.xtext.formatting.IIndentationInformation;
+import org.eclipse.xtext.formatting.IWhitespaceInformationProvider;
+import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
+import org.eclipse.xtext.ui.editor.formatting.PreferenceStoreIndentationInformation;
+import org.eclipse.xtext.ui.editor.formatting.PreferenceStoreWhitespaceInformationProvider;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
@@ -29,6 +33,16 @@ public class IcedCoffeeUiModule extends
 
   public Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindTokenToAttributeIdMapper() {
     return IcedCoffeeTokenMapper.class;
+  }
+
+  @Override
+  public Class<? extends AbstractEditStrategyProvider> bindAbstractEditStrategyProvider() {
+    return IcedCoffeeEditStrategyProvider.class;
+  }
+
+  @Override
+  public Class<? extends IIndentationInformation> bindIIndentationInformation() {
+    return IcedCoffeeIndentationInformation.class;
   }
 
   public void configureHighlightingLexer(com.google.inject.Binder binder) {

@@ -17,6 +17,7 @@ public class IcedCoffeeLexer extends InternalIcedCoffeeLexer {
     super.reset();
     this.newLine = true;
     this.lastIndent = 0;
+    buffer.clear();
   }
 
   private Token create(CommonToken orig, int type) {
@@ -30,12 +31,12 @@ public class IcedCoffeeLexer extends InternalIcedCoffeeLexer {
   public Token nextToken() {
     if (!buffer.empty()) {
       Token next = buffer.pop();
-      System.err.println(next.getType() + " : '" + next.getText() + "'");
+//      System.err.println(next.getType() + " : '" + next.getText() + "'");
       return next;
     }
 
     Token t = super.nextToken();
-    if (t.getType() == RULE_NL || t.getType() == RULE_COMMENT) {
+    if (t.getType() == RULE_NL || t.getType() == RULE_SL_COMMENT) {
       newLine = true;
     } else if (newLine) {
       int curIndent = 0;
@@ -55,7 +56,7 @@ public class IcedCoffeeLexer extends InternalIcedCoffeeLexer {
     buffer.push(t);
 
     Token next = buffer.pop();
-    System.err.println(next.getType() + " : '" + next.getText() + "'");
+//    System.err.println(next.getType() + " : '" + next.getText() + "'");
     return next;
   }
 }

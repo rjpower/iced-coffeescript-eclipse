@@ -25,8 +25,7 @@ Workflow {
 
   component = Generator {
     pathRtProject = runtimeProject
-    pathUiProject = "${runtimeProject}.ui"
-    // pathTestProject = "${runtimeProject}.tests"
+    pathUiProject = "${runtimeProject}.ui"// pathTestProject = "${runtimeProject}.tests"
     projectNameRt = projectName
     projectNameUi = "${projectName}.ui"
     language = {
@@ -49,19 +48,15 @@ Workflow {
         generateStub = true
       }
 
-      // the serialization component (1.0)
-      // fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-
-      // a custom ResourceFactory for use with EMF
       fragment = resourceFactory.ResourceFactoryFragment {
         fileExtensions = file.extensions
       }
 
       // The antlr parser generator fragment.
       fragment = parser.antlr.XtextAntlrGeneratorFragment {
-//        options = {
-//            backtrack = true
-//        }
+      //        options = {
+      //            backtrack = true
+      //        }
       }
 
       // java-based API for validation
@@ -86,7 +81,7 @@ Workflow {
       }
 
       // formatter API
-       fragment = formatting.FormatterFragment {}
+      fragment = formatting.FormatterFragment {}
 
       // labeling API
       fragment = labeling.LabelProviderFragment {}

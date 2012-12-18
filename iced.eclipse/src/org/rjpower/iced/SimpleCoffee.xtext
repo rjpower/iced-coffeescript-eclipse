@@ -1,36 +1,45 @@
-grammar org.rjpower.iced.IcedCoffee with org.eclipse.xtext.common.Terminals
+grammar org.rjpower.iced.IcedCoffee with org.eclipse.xtext.common.Terminals hidden(WS, ML_COMMENT, SL_COMMENT, NL)
 
 generate icedCoffee "http://www.rjpower.org/IcedCoffee"
 
 // This is a trivial, incomplete grammar, but enough to give us some
 // basic indentation support and keyword/comment/string highlighting.
-Script hidden(KW_REQUIRE, LPAREN, RPAREN, INDENT, DEDENT, WS, NL, ANY_OTHER):
+Script hidden(KW_REQUIRE, KW_MISC, SL_COMMENT, PUNCT_LPAREN, PUNCT_RPAREN, PUNCT_COLON, PUNCT_ASSIGNMENT, INDENT, DEDENT, WS, NL,
+ANY_OTHER):
   {Script}
-  (requires+=Require
-  | values+=Value
-  | comments+=COMMENT
-  | blocks+=Block
-  | ws+=WS
-  | nl+=NL
-  | other+=ANY_OTHER)+;
+  expressions+=Expr*;
 
-Value:
-  {Value}
-  (kw=(KW_ALL | KW_EXPORTS)
-  | fstart=(KW_FATARROW | KW_THINARROW)
-  | eq=EQUALS
-  | colon=COLON
-  | int=INT
-  | id=ID
-  | classvar=CLASSVAR
-  | string=STRING);
+Expr returns Expr:
+  {Expr}
+  (require=Require
+  | assign=Assignment
+  | rvalue=RValue
+  | block=Block
+  | (KW_MISC | KW_EXPORTS)
+  | (KW_FATARROW | KW_THINARROW)
+  | SL_COMMENT
+  | ANY_OTHER);
+
+Assignment:
+  left=LValue PUNCT_ASSIGNMENT right=Expr;
+
+LValue:
+  value=(ID | CLASSVAR) ('[' index=Expr ']')?;
+
+RValue:
+  (ID | CLASSVAR | INT | STRING);
 
 Block:
-  {Block}
-  INDENT content=Script DEDENT;
+  {Block} INDENT content=Script DEDENT;
 
-Require:
-  KW_REQUIRE LPAREN? module=STRING RPAREN?;
+Require returns Expr:
+  KW_REQUIRE PUNCT_LPAREN? module=STRING PUNCT_RPAREN?;
+
+terminal STRING:
+  ("'''"->"'''") |
+  ('"""'->'"""') |
+  ('"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"') |
+  ("'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'");
 
 terminal KW_EXPORTS:
   'exports';
@@ -44,7 +53,7 @@ terminal KW_FATARROW:
 terminal KW_THINARROW:
   '->';
 
-terminal KW_ALL:
+terminal KW_MISC:
   'and' |
   'await' |
   'break' |
@@ -91,17 +100,17 @@ terminal KW_ALL:
   'while' |
   'yes';
 
-terminal LPAREN:
+terminal PUNCT_ASSIGNMENT:
+  '=' | '?=' | '+=' | '-=' | '||=';
+
+terminal PUNCT_LPAREN:
   '(';
 
-terminal RPAREN:
+terminal PUNCT_RPAREN:
   ')';
 
-terminal COLON:
+terminal PUNCT_COLON:
   ':';
-
-terminal EQUALS:
-  '=';
 
 terminal CLASSVAR:
   '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;
@@ -116,20 +125,16 @@ terminal DEDENT:
   'DEDENT';
 
 terminal NL:
-  ('\n' | '\r')+;
+  ('\r' | '\n')*;
 
 terminal WS:
-  (' ' | '\t')+;
+  (' ' | '\t')*;
 
-terminal STRING:
-  "'''" !("'''")+ "'''" |
-  '"""' !('"""')+ '"""' |
-  '"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"' |
-  "'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'";
-
-terminal COMMENT:
+terminal SL_COMMENT:
   '#' !('\n' | '\r')*;
+
+terminal ID:
+  '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 
 terminal ANY_OTHER:
   .;
-  

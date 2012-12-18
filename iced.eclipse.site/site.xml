@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <description name="Iced Coffeescript Editor" url="http://rjpower.org/eclipse/">
+      A simple editor for Coffeescript (with Iced extensions).  
       
+      Syntax highlighting and block indentation support is provided, as well
+      as basic cross-referencing of imports.
    </description>
    <feature url="features/org.rjpower.iced.eclipse.feature_1.0.0.201212171608.jar" id="org.rjpower.iced.eclipse.feature" version="1.0.0.201212171608"/>
 </site>
