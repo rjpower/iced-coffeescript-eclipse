@@ -217,12 +217,25 @@ limitations under the License.
       <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
       <import plugin="org.eclipse.compare"/>
       <import plugin="org.eclipse.xtext.xbase.ui"/>
-      <import plugin="org.apache.log4j"/>
       <import plugin="org.rjpower.iced.eclipse" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.log4j"/>
+      <import plugin="org.eclipse.xtext"/>
+      <import plugin="org.eclipse.xtext.util"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.xtext.common.types"/>
+      <import plugin="org.eclipse.xtext.xbase.lib"/>
    </requires>
 
    <plugin
          id="org.rjpower.iced.eclipse.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.rjpower.iced.eclipse"
          download-size="0"
          install-size="0"
          version="0.0.0"

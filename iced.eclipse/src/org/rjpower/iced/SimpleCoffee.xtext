@@ -4,27 +4,23 @@ generate icedCoffee "http://www.rjpower.org/IcedCoffee"
 
 // This is a trivial, incomplete grammar, but enough to give us some
 // basic indentation support and keyword/comment/string highlighting.
-Script hidden(KW_REQUIRE, KW_MISC, SL_COMMENT, PUNCT_LPAREN, PUNCT_RPAREN, PUNCT_COLON, PUNCT_ASSIGNMENT, INDENT, DEDENT, WS, NL,
-ANY_OTHER):
+Script hidden(KW_REQUIRE, KW_MISC, SL_COMMENT, PUNCT_LPAREN, PUNCT_RPAREN, PUNCT_COLON, PUNCT_ASSIGNMENT, INDENT,
+DEDENT, WS, NL, ANY_OTHER):
   {Script}
   expressions+=Expr*;
 
 Expr returns Expr:
   {Expr}
   (require=Require
-  | assign=Assignment
-  | rvalue=RValue
+  | list=List
   | block=Block
   | (KW_MISC | KW_EXPORTS)
   | (KW_FATARROW | KW_THINARROW)
   | SL_COMMENT
   | ANY_OTHER);
 
-Assignment:
-  left=LValue PUNCT_ASSIGNMENT right=Expr;
-
-LValue:
-  value=(ID | CLASSVAR) ('[' index=Expr ']')?;
+List:
+  PUNCT_LBRACKET values+=Expr (',' values+=Expr)* PUNCT_RBRACKET;
 
 RValue:
   (ID | CLASSVAR | INT | STRING);
@@ -102,6 +98,12 @@ terminal KW_MISC:
 
 terminal PUNCT_ASSIGNMENT:
   '=' | '?=' | '+=' | '-=' | '||=';
+
+terminal PUNCT_LBRACKET:
+  '[';
+
+terminal PUNCT_RBRACKET:
+  ']';
 
 terminal PUNCT_LPAREN:
   '(';
