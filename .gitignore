@@ -4,3 +4,4 @@
 */bin
 iced.eclipse.site/plugins/
 iced.eclipse.site/features/
+*/.externalToolBuilders/**

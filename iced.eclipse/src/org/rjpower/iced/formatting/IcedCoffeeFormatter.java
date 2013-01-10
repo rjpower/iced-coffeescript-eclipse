@@ -3,6 +3,11 @@
  */
 package org.rjpower.iced.formatting;
 
+import java.util.List;
+import java.util.Set;
+
+import org.eclipse.xtext.GrammarUtil;
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.rjpower.iced.services.IcedCoffeeGrammarAccess;
@@ -14,10 +19,26 @@ public class IcedCoffeeFormatter extends AbstractDeclarativeFormatter {
     IcedCoffeeGrammarAccess g = (IcedCoffeeGrammarAccess) getGrammarAccess();
     c.setLinewrap(0, 1, 2).before(g.getSL_COMMENTRule());
 
+    Set<String> allKeywords = GrammarUtil.getAllKeywords(g.getGrammar());
+    List<Keyword> findKeywords = g.findKeywords(allKeywords
+        .toArray(new String[0]));
+    for (Keyword keyword : findKeywords) {
+      c.setNoSpace().around(keyword);
+    }
+
     c.setNoSpace().around(g.getWSRule());
     c.setNoSpace().around(g.getNLRule());
     c.setNoSpace().around(g.getINDENTRule());
     c.setNoSpace().around(g.getDEDENTRule());
+    c.setNoSpace().around(g.getPUNCT_LPARENRule());
+    c.setNoSpace().around(g.getPUNCT_RPARENRule());
+    c.setNoSpace().around(g.getSTRINGRule());
+    c.setNoSpace().around(g.getPUNCT_LBRACKETRule());
+    c.setNoSpace().around(g.getPUNCT_RBRACKETRule());
+    c.setNoSpace().around(g.getKW_MISCRule());
+    c.setNoSpace().around(g.getKW_REQUIRERule());
+    c.setNoSpace().around(g.getANY_OTHERRule());
+
     c.setNoLinewrap().around(g.getNLRule());
     c.setIndentationDecrement().after(g.getDEDENTRule());
     c.setIndentationIncrement().after(g.getINDENTRule());

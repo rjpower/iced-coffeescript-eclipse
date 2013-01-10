@@ -1,12 +1,8 @@
 package org.rjpower.iced.ui;
 
-import org.eclipse.xtext.formatting.IIndentationInformation;
+import org.eclipse.xtext.ui.editor.formatting.PreferenceStoreIndentationInformation;
 
-public class IcedCoffeeIndentationInformation implements
-    IIndentationInformation {
+public class IcedCoffeeIndentationInformation extends
+    PreferenceStoreIndentationInformation {
 
-  @Override
-  public String getIndentString() {
-    return "  ";
-  }
 }

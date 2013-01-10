@@ -4,11 +4,9 @@
 package org.rjpower.iced.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
-import org.rjpower.iced.ui.contentassist.AbstractIcedCoffeeProposalProvider;
 
 /**
  * see

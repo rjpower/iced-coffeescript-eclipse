@@ -1,11 +1,9 @@
 package org.rjpower.iced.ui;
 
+import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.formatting.IIndentationInformation;
-import org.eclipse.xtext.formatting.IWhitespaceInformationProvider;
 import org.eclipse.xtext.ui.editor.autoedit.AbstractEditStrategyProvider;
-import org.eclipse.xtext.ui.editor.formatting.PreferenceStoreIndentationInformation;
-import org.eclipse.xtext.ui.editor.formatting.PreferenceStoreWhitespaceInformationProvider;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
@@ -53,5 +51,4 @@ public class IcedCoffeeUiModule extends
                 .named(org.eclipse.xtext.ui.LexerUIBindings.HIGHLIGHTING))
         .to(org.rjpower.iced.IcedCoffeeLexer.class);
   }
-
 }

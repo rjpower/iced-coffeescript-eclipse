@@ -1,42 +1,43 @@
-grammar org.rjpower.iced.IcedCoffee with org.eclipse.xtext.common.Terminals hidden(WS, ML_COMMENT, SL_COMMENT, NL)
+// This is a trivial 'grammar' - mostly just lexer token definitions - it's 
+// enough information to provide basic indentation support and 
+// keyword/comment/string highlighting.
+grammar org.rjpower.iced.IcedCoffee
 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate icedCoffee "http://www.rjpower.org/IcedCoffee"
 
-// This is a trivial, incomplete grammar, but enough to give us some
-// basic indentation support and keyword/comment/string highlighting.
-Script hidden(KW_REQUIRE, KW_MISC, SL_COMMENT, PUNCT_LPAREN, PUNCT_RPAREN, PUNCT_COLON, PUNCT_ASSIGNMENT, INDENT,
-DEDENT, WS, NL, ANY_OTHER):
-  {Script}
-  expressions+=Expr*;
+// Accept anything.
+Script:
+  items+=(KEYWORD | REGEXP | PUNCT | IDENTIFIER | STRING | INDENT | DEDENT | WS | NL | SL_COMMENT | ANY_OTHER)*;
 
-Expr returns Expr:
-  {Expr}
-  (require=Require
-  | list=List
-  | block=Block
-  | (KW_MISC | KW_EXPORTS)
-  | (KW_FATARROW | KW_THINARROW)
-  | SL_COMMENT
-  | ANY_OTHER);
+KEYWORD:
+  KW_EXPORTS | KW_REQUIRE | KW_FATARROW | KW_THINARROW | KW_MISC;
 
-List:
-  PUNCT_LBRACKET values+=Expr (',' values+=Expr)* PUNCT_RBRACKET;
+PUNCT:
+  PUNCT_OPERATOR | PUNCT_ASSIGNMENT | PUNCT_LBRACKET | PUNCT_RBRACKET | PUNCT_LPAREN | PUNCT_RPAREN | PUNCT_COLON;
 
-RValue:
-  (ID | CLASSVAR | INT | STRING);
+IDENTIFIER:
+  CLASSNAME | CLASSVAR | ID | NUMBER;
 
-Block:
-  {Block} INDENT content=Script DEDENT;
+  // These are 'dummy' tokens.  The lexer will output these names instead of
+// actual tokens.  This way we can have Antlr generate most of the lexer
+// for us and just override the whitespace recognition.
+terminal INDENT:
+  'INDENT';
 
-Require returns Expr:
-  KW_REQUIRE PUNCT_LPAREN? module=STRING PUNCT_RPAREN?;
+terminal DEDENT:
+  'DEDENT';
 
 terminal STRING:
   ("'''"->"'''") |
   ('"""'->'"""') |
-  ('"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | '"'))* '"') |
-  ("'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | '"' | "'" | '\\') | !('\\' | "'"))* "'");
+  ('"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | 'x' | '"' | "'" | '\\') | !('\\' | '"'))* '"') |
+  ("'" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | 'u' | 'x' | '"' | "'" | '\\') | !('\\' | "'"))* "'");
 
+terminal REGEXP:
+  ('///'->'///') | 
+  ('/' (('\\' .) | !('\\' | '/' | '\n' | '\r'))+ '/');
+  
 terminal KW_EXPORTS:
   'exports';
 
@@ -96,8 +97,14 @@ terminal KW_MISC:
   'while' |
   'yes';
 
+terminal NUMBER:
+  ('0'..'9')+ ('.' ('0'..'9')*)?;
+
+terminal PUNCT_OPERATOR:
+  '||' | '&&' | '&' | '|' | '+' | '-' | '*' | '/' | '%';
+
 terminal PUNCT_ASSIGNMENT:
-  '=' | '?=' | '+=' | '-=' | '||=';
+  '||=' | '=' | '?=' | '+=' | '-=';
 
 terminal PUNCT_LBRACKET:
   '[';
@@ -114,29 +121,23 @@ terminal PUNCT_RPAREN:
 terminal PUNCT_COLON:
   ':';
 
+terminal CLASSNAME:
+  'A..Z' ('A..Z' | 'a..z')*;
+
 terminal CLASSVAR:
   '@' ('a'..'z' | 'A'..'Z' | '0'..'9' | '_' | '$')+;
 
-  // These are 'dummy' tokens.  The lexer will output these names instead of
-// actual tokens.  Why? So that we can have Antlr generate most of the lexer
-// for us and just override the whitespace recognition.
-terminal INDENT:
-  'INDENT';
-
-terminal DEDENT:
-  'DEDENT';
+terminal ID:
+  ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 
 terminal NL:
-  ('\r' | '\n')*;
+  ('\r' | '\n')+;
 
 terminal WS:
-  (' ' | '\t')*;
+  (' ' | '\t')+;
 
 terminal SL_COMMENT:
   '#' !('\n' | '\r')*;
-
-terminal ID:
-  '^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 
 terminal ANY_OTHER:
   .;

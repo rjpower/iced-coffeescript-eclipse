@@ -41,9 +41,9 @@ public class IcedCoffeeEditStrategyProvider extends
     System.err.println("Configuring editor...");
     String cType = IDocument.DEFAULT_CONTENT_TYPE;
     acceptor.accept(new DefaultIndentLineAutoEditStrategy(), cType);
-    multiline(acceptor, "=", "  ", "\n");
-    multiline(acceptor, "->", "  ", "\n");
-    multiline(acceptor, "=>", "  ", "\n");
+    multiline(acceptor, "=", "  ", "");
+    multiline(acceptor, "->", "  ", "");
+    multiline(acceptor, "=>", "  ", "");
     multiline(acceptor, "(", "  ", ")");
     multiline(acceptor, "{", "  ", "}");
     singleline(acceptor, "(", ")");

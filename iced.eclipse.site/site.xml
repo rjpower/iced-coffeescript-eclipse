@@ -5,7 +5,7 @@
 
 Syntax highlighting and block indentation support is provided, as well as basic cross-referencing of imports.
    </description>
-   <feature url="features/org.rjpower.iced.eclipse.feature_1.0.0.201212181243.jar" id="org.rjpower.iced.eclipse.feature" version="1.0.0.201212181243">
+   <feature url="features/org.rjpower.iced.eclipse.feature_1.0.0.201301101024.jar" id="org.rjpower.iced.eclipse.feature" version="1.0.0.201301101024">
       <category name="org.rjpower.iced.eclipse"/>
    </feature>
    <category-def name="org.rjpower.iced.eclipse" label="IcedCoffeeScript">

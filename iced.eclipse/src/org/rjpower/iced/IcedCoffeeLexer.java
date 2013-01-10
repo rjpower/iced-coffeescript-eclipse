@@ -43,6 +43,7 @@ public class IcedCoffeeLexer extends InternalIcedCoffeeLexer {
       if (t.getType() == RULE_WS) {
         curIndent = t.getText().length();
       }
+      curIndent /= 2;
       while (curIndent < lastIndent) {
         buffer.push(create((CommonToken) t, RULE_DEDENT));
         curIndent++;
